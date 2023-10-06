@@ -29,13 +29,13 @@ export const routines_squemas = `
 export const routines_querys = {
   routineUserDay: async (_, { ID, DAY }) => {
     const result = await axios.get(
-      `http://localhost:${process.env.PORT_ROUTINES}/api/User/${ID}/${DAY}`
+      `http://rutinasms:${process.env.PORT_ROUTINES}/api/User/${ID}/${DAY}`
     );
     return result.data;
   },
   routineUser: async (_, { ID }) => {
     const result = await axios.get(
-      `http://localhost:${process.env.PORT_ROUTINES}/api/User/${ID}`
+      `http://rutinasms:${process.env.PORT_ROUTINES}/api/User/${ID}`
     );
     return result.data;
   },
