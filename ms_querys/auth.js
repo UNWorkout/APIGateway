@@ -31,18 +31,13 @@ export const auth_squemas = `
     UserEmail: String
     UserPasswordHash: String
   }
-`;
+`
+;
 
 export const auth_querys = {
-    allAuths: async () => {
-      const result = await axios.get(
-        `http://localhost:${process.env.PORT_AUTH}/login`
-      );
-      return result.data;
-    },
     authByID: async (_, { ID }) => {
       const result = await axios.get(
-        `http://localhost:${process.env.PORT_AUTH}/login/${ID}`
+        `http://authms:${process.env.PORT_AUTH}/login/${ID}`
       );
       return result.data;
     },
@@ -50,23 +45,22 @@ export const auth_querys = {
 
 export const auth_mutations = {
     addAuth: async (_, args) => {
-      console.log(args);
       const result = await axios.post(
-        `http://localhost:${process.env.PORT_AUTH}/login`,
+        `http://authms:${process.env.PORT_AUTH}/login`,
         args
       );
       return result.data;
     },
     updateAuth: async (_, args) => {
       const result = await axios.put(
-        `http://localhost:${process.env.PORT_AUTH}/login/${args.ID}`,
+        `http://authms:${process.env.PORT_AUTH}/login/${args.ID}`,
         args
       );
       return result.data.videos;
     },
     deleteAuth: async (_, { ID }) => {
       const result = await axios.delete(
-        `http://localhost:${process.env.PORT_AUTH}/login/${ID}`
+        `http://authms:${process.env.PORT_AUTH}/login/${ID}`
       );
       console.log(result.data)
       return result.data;

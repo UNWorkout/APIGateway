@@ -111,49 +111,49 @@ export const videos_squemas = `
 export const videos_querys = {
   allvideos: async () => {
     const result = await axios.get(
-      `http://localhost:${process.env.PORT_VIDEOS}/videos`
+      `http://videosms:${process.env.PORT_VIDEOS}/videos`
     );
     return result.data.videos;
   },
   videoByID: async (_, { ID }) => {
     const result = await axios.get(
-      `http://localhost:${process.env.PORT_VIDEOS}/videos/${ID}`
+      `http://videosms:${process.env.PORT_VIDEOS}/videos/${ID}`
     );
     return result.data.videos;
   },
   allmuscles: async () => {
     const result = await axios.get(
-      `http://localhost:${process.env.PORT_VIDEOS}/categoria/musculos`
+      `http://videosms:${process.env.PORT_VIDEOS}/categoria/musculos`
     );
     return result.data.musculos;
   },
   allgroups: async () => {
     const result = await axios.get(
-      `http://localhost:${process.env.PORT_VIDEOS}/categoria/grupoMuscular`
+      `http://videosms:${process.env.PORT_VIDEOS}/categoria/grupoMuscular`
     );
     return result.data.grupos;
   },
   allobjectives: async () => {
     const result = await axios.get(
-      `http://localhost:${process.env.PORT_VIDEOS}/categoria/objetivo`
+      `http://videosms:${process.env.PORT_VIDEOS}/categoria/objetivo`
     );
     return result.data.objetivos;
   },
   alldifficulties: async () => {
     const result = await axios.get(
-      `http://localhost:${process.env.PORT_VIDEOS}/categoria/dificultad`
+      `http://videosms:${process.env.PORT_VIDEOS}/categoria/dificultad`
     );
     return result.data.dificultades;
   },
   allequipments: async () => {
     const result = await axios.get(
-      `http://localhost:${process.env.PORT_VIDEOS}/categoria/equipamento`
+      `http://videosms:${process.env.PORT_VIDEOS}/categoria/equipamento`
     );
     return result.data.equipamentos;
   },
   alldisciplines: async () => {
     const result = await axios.get(
-      `http://localhost:${process.env.PORT_VIDEOS}/categoria/disciplina`
+      `http://videosms:${process.env.PORT_VIDEOS}/categoria/disciplina`
     );
     return result.data.disciplina;
   },
@@ -163,21 +163,21 @@ export const videos_mutations = {
   addVideo: async (_, args) => {
     console.log(args);
     const result = await axios.post(
-      `http://localhost:${process.env.PORT_VIDEOS}/videos`,
+      `http://videosms:${process.env.PORT_VIDEOS}/videos`,
       args
     );
     return result.data;
   },
   updateVideo: async (_, args) => {
     const result = await axios.put(
-      `http://localhost:${process.env.PORT_VIDEOS}/videos/${args.ID}`,
+      `http://videosms:${process.env.PORT_VIDEOS}/videos/${args.ID}`,
       args
     );
     return result.data.videos;
   },
   deleteVideo: async (_, { ID }) => {
     const result = await axios.delete(
-      `http://localhost:${process.env.PORT_VIDEOS}/videos/${ID}`
+      `http://videosms:${process.env.PORT_VIDEOS}/videos/${ID}`
     );
     console.log(result.data)
     return result.data;
