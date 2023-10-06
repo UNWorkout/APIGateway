@@ -15,26 +15,39 @@ import {
   auth_mutations
 } from "./ms_querys/auth.js"
 
+import {
+  routines_func_querys,
+  routines_querys,
+  routines_squemas,
+  routines_mutations,
+  routines_func_mutations,
+} from "./ms_querys/routines.js";
+
+
 const typeDefs = gql`
 
   ${videos_squemas}
 
   ${auth_squemas}
 
+  ${routines_squemas}
+
   type Query {
     ${videos_func_querys}
     ${auth_func_querys}
+    ${routines_func_querys}
   }
 
   type Mutation {
     ${videos_func_mutations}
     ${auth_func_mutations}
+    ${routines_func_mutations}
   }
 `;
 
 const resolvers = {
-  Query: { ...videos_querys, ...auth_querys },
-  Mutation: { ...videos_mutations, ...auth_mutations },
+  Query: { ...videos_querys, ...auth_querys, ...routines_querys },
+  Mutation: { ...videos_mutations, ...auth_mutations, ...routines_mutations },
 };
 
 const server = new ApolloServer({
