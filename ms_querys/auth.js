@@ -2,7 +2,6 @@ import axios from "axios";
 import "dotenv/config";
 
 export const auth_func_querys = `
-  allAuths: [Login]
   authByID(UserId: ID!): Login
 `;
 
@@ -35,9 +34,9 @@ export const auth_squemas = `
 ;
 
 export const auth_querys = {
-    authByID: async (_, { ID }) => {
+    authByID: async (_, { UserId }) => {
       const result = await axios.get(
-        `http://${process.env.NAME_AUTH}:${process.env.PORT_AUTH}/login/${id}`
+        `http://${process.env.NAME_AUTH}:${process.env.PORT_AUTH}/login/${UserId}`
         );
         return result.data;
       },
@@ -46,7 +45,7 @@ export const auth_querys = {
   export const auth_mutations = {
     addAuth: async (_, args) => {
         const result = await axios.post(
-          `http://${process.env.NAME_AUTH}:${process.env.PORT_AUTH}/login`,
+          `http://${process.env.NAME_AUTH}:${process.env.PORT_AUTH}/api/token`,
         args
       );
       return result.data;
