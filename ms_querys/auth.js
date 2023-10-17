@@ -15,7 +15,7 @@ export const auth_func_mutations = `
   updateAuth(
     UserId: ID!
     UserPasswordHash: String
-  ): Login
+  ): Message
 
   deleteAuth(UserId: ID!): Message
 `;
@@ -45,7 +45,7 @@ export const auth_querys = {
   export const auth_mutations = {
     addAuth: async (_, args) => {
         const result = await axios.post(
-          `http://${process.env.NAME_AUTH}:${process.env.PORT_AUTH}/api/token`,
+          `http://${process.env.NAME_AUTH}:${process.env.PORT_AUTH}/login/`,
         args
       );
       return result.data;

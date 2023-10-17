@@ -14,6 +14,21 @@ export const users_func_mutations = `
     cel: Float
     email: String
   ): String
+
+  registerUser(
+    nombres: String
+    apellidos: String
+    fecha_nacimiento: String
+    sexo: String
+    cel: Float
+    email: String
+    password: String
+  ): Message 
+
+  loginUser(
+    email: String
+    password: String
+  ): Message
 `;
 
 export const users_squemas = `
@@ -39,10 +54,50 @@ export const users_querys = {
 
 export const users_mutations = {
   addUser: async (_, args) => {
+
     const result = await axios.post(
       `http://${process.env.NAME_USERS}:${process.env.PORT_USERS}/user`,
       args
     );
     return result.data;
-  }  
+  },
+  registerUser: async (_, args) => {
+    // add user
+    try{
+    await axios.post(
+      `http://${process.env.NAME_USERS}:${process.env.PORT_USERS}/user`,
+      args
+    );
+
+    await axios.post(
+          `http://${process.env.NAME_AUTH}:${process.env.PORT_AUTH}/login/`,
+        {
+          "UserEmail": args['email'],
+          "UserPasswordHash": args['password']}
+      );
+        } catch (error) {
+          return {message: error.message}
+        }
+    return {message: "Usuario registrado correctamente"};
+  },  
+  loginUser: async (_, args) => {
+    try{
+    const result = await axios.get(
+      `http://${process.env.NAME_USERS}:${process.env.PORT_USERS}/user`
+    );
+    var id_user = null;
+    for (let i = 0; i < result.data.length; i++) {
+      if (result.data[i].email == args['email'] ) {
+        id_user = result.data[i].id_usuario;
+      }
+    }
+    const result_2 = await axios.get(
+        `http://${process.env.NAME_AUTH}:${process.env.PORT_AUTH}/login/${id_user}`
+        );
+    
+    } catch (error) {
+      return {message: error.message}
+    }
+    return {message: "Usuario logeado correctamente"};
+  }
 };
