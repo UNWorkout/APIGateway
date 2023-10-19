@@ -3,6 +3,10 @@ import "dotenv/config";
 
 export const users_func_querys = `
   allusers: [User]
+  loginUser(
+    email: String
+    password: String
+  ): Message
 `;
 
 export const users_func_mutations = `
@@ -25,10 +29,6 @@ export const users_func_mutations = `
     password: String
   ): Message 
 
-  loginUser(
-    email: String
-    password: String
-  ): Message
 `;
 
 export const users_squemas = `
@@ -50,6 +50,26 @@ export const users_querys = {
     );
     return result.data;
   },
+  loginUser: async (_, args) => {
+    try{
+    const result = await axios.get(
+      `http://${process.env.NAME_USERS}:${process.env.PORT_USERS}/user`
+    );
+    var id_user = null;
+    for (let i = 0; i < result.data.length; i++) {
+      if (result.data[i].email == args['email'] ) {
+        id_user = result.data[i].id_usuario;
+      }
+    }
+    const result_2 = await axios.get(
+        `http://${process.env.NAME_AUTH}:${process.env.PORT_AUTH}/login/${id_user}`
+        );
+    
+    } catch (error) {
+      return {message: error.message}
+    }
+    return {message: "Usuario logeado correctamente"};
+  }
 };
 
 export const users_mutations = {
@@ -79,25 +99,5 @@ export const users_mutations = {
           return {message: error.message}
         }
     return {message: "Usuario registrado correctamente"};
-  },  
-  loginUser: async (_, args) => {
-    try{
-    const result = await axios.get(
-      `http://${process.env.NAME_USERS}:${process.env.PORT_USERS}/user`
-    );
-    var id_user = null;
-    for (let i = 0; i < result.data.length; i++) {
-      if (result.data[i].email == args['email'] ) {
-        id_user = result.data[i].id_usuario;
-      }
-    }
-    const result_2 = await axios.get(
-        `http://${process.env.NAME_AUTH}:${process.env.PORT_AUTH}/login/${id_user}`
-        );
-    
-    } catch (error) {
-      return {message: error.message}
-    }
-    return {message: "Usuario logeado correctamente"};
-  }
+  }  
 };
