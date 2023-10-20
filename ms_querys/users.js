@@ -15,7 +15,7 @@ export const users_func_mutations = `
     apellidos: String
     fecha_nacimiento: String
     sexo: String
-    cel: Float
+    cel: String
     email: String
   ): String
 
@@ -24,7 +24,7 @@ export const users_func_mutations = `
     apellidos: String
     fecha_nacimiento: String
     sexo: String
-    cel: Float
+    cel: String
     email: String
     password: String
   ): Message 
@@ -69,7 +69,7 @@ export const users_querys = {
 
 export const users_mutations = {
   addUser: async (_, args) => {
-
+    args['cel'] = parseFloat(args['cel']);
     const result = await axios.post(
       `http://${process.env.NAME_USERS}:${process.env.PORT_USERS}/user`,
       args
@@ -77,6 +77,7 @@ export const users_mutations = {
     return result.data;
   },
   registerUser: async (_, args) => {
+    args['cel'] = parseFloat(args['cel']);
     await axios.post(
       `http://${process.env.NAME_USERS}:${process.env.PORT_USERS}/user`,
       args
