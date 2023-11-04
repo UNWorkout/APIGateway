@@ -31,6 +31,11 @@ import {
   users_func_mutations,
 } from "./ms_querys/users.js";
 
+import {
+  crono_schemas,
+  crono_func_mutations,
+  crono_mutations,
+} from "./ms_querys/crono.js";
 
 const typeDefs = gql`
 
@@ -41,6 +46,8 @@ const typeDefs = gql`
   ${routines_squemas}
 
   ${users_squemas}
+
+  ${crono_schemas}
 
   type Query {
     ${videos_func_querys}
@@ -54,12 +61,13 @@ const typeDefs = gql`
     ${auth_func_mutations}
     ${routines_func_mutations}
     ${users_func_mutations}
+    ${crono_func_mutations}
   }
 `;
 
 const resolvers = {
   Query: { ...videos_querys, ...auth_querys, ...routines_querys , ...users_querys},
-  Mutation: { ...videos_mutations, ...auth_mutations, ...routines_mutations, ...users_mutations},
+  Mutation: { ...videos_mutations, ...auth_mutations, ...routines_mutations, ...users_mutations,...crono_mutations},
 };
 
 const server = new ApolloServer({

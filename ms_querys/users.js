@@ -7,6 +7,9 @@ export const users_func_querys = `
     email: String
     password: String
   ): Message
+  userEmail(
+    id_usuario: ID!
+  ): String
 `;
 
 export const users_func_mutations = `
@@ -64,6 +67,12 @@ export const users_querys = {
         `http://${process.env.NAME_AUTH}:${process.env.PORT_AUTH}/login/${id_user}`
         );
     return {message: "Usuario logeado correctamente"};
+  },
+  userEmail: async (_, args) => {
+    const result = await axios.get(
+      `http://${process.env.NAME_USERS}:${process.env.PORT_USERS}/user/${args.id_usuario}`
+    );
+    return result.data.email;
   }
 };
 
