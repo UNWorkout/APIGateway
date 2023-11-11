@@ -49,13 +49,13 @@ export const users_squemas = `
 export const users_querys = {
   allusers: async () => {
     const result = await axios.get(
-      `http://${process.env.NAME_USERS}:${process.env.PORT_USERS}/user`
+      `http://${process.env.NAME}:${process.env.PORT_USERS}/user`
     );
     return result.data;
   },
   loginUser: async (_, args) => {
     const result = await axios.get(
-      `http://${process.env.NAME_USERS}:${process.env.PORT_USERS}/user`
+      `http://${process.env.NAME}:${process.env.PORT_USERS}/user`
     );
     var id_user = null;
     for (let i = 0; i < result.data.length; i++) {
@@ -64,13 +64,13 @@ export const users_querys = {
       }
     }
     const result_2 = await axios.get(
-        `http://${process.env.NAME_AUTH}:${process.env.PORT_AUTH}/login/${id_user}`
+        `http://${process.env.NAME}:${process.env.PORT_AUTH}/login/${id_user}`
         );
     return {message: "Usuario logeado correctamente"};
   },
   userEmail: async (_, args) => {
     const result = await axios.get(
-      `http://${process.env.NAME_USERS}:${process.env.PORT_USERS}/user/${args.id_usuario}`
+      `http://${process.env.NAME}:${process.env.PORT_USERS}/user/${args.id_usuario}`
     );
     return result.data.email;
   }
@@ -80,7 +80,7 @@ export const users_mutations = {
   addUser: async (_, args) => {
     args['cel'] = parseFloat(args['cel']);
     const result = await axios.post(
-      `http://${process.env.NAME_USERS}:${process.env.PORT_USERS}/user`,
+      `http://${process.env.NAME}:${process.env.PORT_USERS}/user`,
       args
     );
     return result.data;
@@ -88,12 +88,12 @@ export const users_mutations = {
   registerUser: async (_, args) => {
     args['cel'] = parseFloat(args['cel']);
     await axios.post(
-      `http://${process.env.NAME_USERS}:${process.env.PORT_USERS}/user`,
+      `http://${process.env.NAME}:${process.env.PORT_USERS}/user`,
       args
     );
 
     await axios.post(
-          `http://${process.env.NAME_AUTH}:${process.env.PORT_AUTH}/login/`,
+          `http://${process.env.NAME}:${process.env.PORT_AUTH}/login/`,
         {
           "UserEmail": args['email'],
           "UserPasswordHash": args['password']}

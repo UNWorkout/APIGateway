@@ -36,7 +36,7 @@ export const auth_squemas = `
 export const auth_querys = {
     authByID: async (_, { UserId }) => {
       const result = await axios.get(
-        `http://${process.env.NAME_AUTH}:${process.env.PORT_AUTH}/login/${UserId}`
+        `http://${process.env.NAME}:${process.env.PORT_AUTH}/login/${UserId}`
         );
         return result.data;
       },
@@ -45,21 +45,21 @@ export const auth_querys = {
   export const auth_mutations = {
     addAuth: async (_, args) => {
         const result = await axios.post(
-          `http://${process.env.NAME_AUTH}:${process.env.PORT_AUTH}/login/`,
+          `http://${process.env.NAME}:${process.env.PORT_AUTH}/login/`,
         args
       );
       return result.data;
     },
     updateAuth: async (_, args) => {
       const result = await axios.put(
-        `http://${process.env.NAME_AUTH}:${process.env.PORT_AUTH}/login/${args.ID}`,
+        `http://${process.env.NAME}:${process.env.PORT_AUTH}/login/${args.ID}`,
         args
       );
       return result.data.videos;
     },
     deleteAuth: async (_, { ID }) => {
       const result = await axios.delete(
-        `http://${process.env.NAME_AUTH}:${process.env.PORT_AUTH}/login/${ID}`
+        `http://${process.env.NAME}:${process.env.PORT_AUTH}/login/${ID}`
       );
       console.log(result.data)
       return result.data;
