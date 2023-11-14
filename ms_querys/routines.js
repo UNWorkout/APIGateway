@@ -55,19 +55,31 @@ export const routines_querys = {
     return result.data;
   },
   routineUser: async (_, { ID }) => {
-    const result = await axios.get(
+    console.log(ID)
+    let result
+    try{
+    result = await axios.get(
       `http://${process.env.NAME}:${process.env.PORT_ROUTINES}/api/User/${ID}`
     );
+    }catch(e){
+      console.error(e)
+    }
+    console.log(result)
     return result.data;
   },
 };
 
 export const routines_mutations = {
   addRoutine: async (_, args) => {
-    const result = await axios.post(
-      `http://${process.env.NAME}:${process.env.PORT_ROUTINES}/api`,
-      args
-    );
+    console.log(JSON.stringify(args))
+    let result
+    try{
+      result = await axios.post(
+        `http://${process.env.NAME}:${process.env.PORT_ROUTINES}/api`,
+        args
+      );
+    }catch(e){console.error(e)}
+    console.log(result)
     return result.data;
   },
   updateRoutine: async(_, args) => {

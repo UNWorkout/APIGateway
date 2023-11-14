@@ -106,6 +106,10 @@ export const videos_squemas = `
     Descripcion: String
     Videos: [Video]
   }
+
+  type Message {
+    message: String
+  }
 `;
 
 export const videos_querys = {
