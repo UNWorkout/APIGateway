@@ -33,6 +33,8 @@ import {
   auth2ms_func_mutations,
   auth2ms_squemas,
   auth2ms_mutations,
+  auth2ms_func_querys,
+  auth2ms_querys,
 } from "./ms_querys/auth2ms.js";
 
 const typeDefs = gql`
@@ -51,6 +53,7 @@ const typeDefs = gql`
     ${videos_func_querys}
     ${routines_func_querys}
     ${users_func_querys}
+    ${auth2ms_func_querys}
   }
 
   type Mutation {
@@ -63,7 +66,7 @@ const typeDefs = gql`
 `;
 
 const resolvers = {
-  Query: { ...videos_querys, ...routines_querys , ...users_querys},
+  Query: { ...videos_querys, ...routines_querys , ...users_querys,...auth2ms_querys},
   Mutation: { ...videos_mutations, ...routines_mutations, ...users_mutations,...crono_mutations,...auth2ms_mutations},
 };
 

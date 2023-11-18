@@ -28,8 +28,16 @@ export const auth2ms_squemas = `
     msg: String
     token: String
   }
-`
-;
+
+  type UserEmail {
+    msg: String
+    email: String
+  }
+`;
+
+export const auth2ms_func_querys = `
+  getUserEmailById(id: String!): UserEmail
+`;
 
 export const auth2ms_mutations = {
     createUser: async (_, args) => {
@@ -54,3 +62,12 @@ export const auth2ms_mutations = {
       return result.data;
     },
   };
+
+export const auth2ms_querys = {
+  getUserEmailById: async (_, args) => {
+    const result = await axios.get(
+      `http://${process.env.NAME}:${process.env.PORT_AUTH2MS}/api/iduser/${args.id}`
+    );
+    return result.data;
+  },
+};
