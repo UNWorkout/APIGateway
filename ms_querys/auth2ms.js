@@ -1,5 +1,6 @@
 import axios from "axios";
 import "dotenv/config";
+import {unAuthError} from "../utils/index.js";
 
 export const auth2ms_func_mutations = `
   createUser(
@@ -40,7 +41,8 @@ export const auth2ms_func_querys = `
 `;
 
 export const auth2ms_mutations = {
-    createUser: async (_, args) => {
+    createUser: async (_, args, ctx) => {
+
       console.log(JSON.stringify(args))
       let result
       try{
@@ -54,7 +56,8 @@ export const auth2ms_mutations = {
       console.log(result)
       return result.data;
     },
-    loginUser: async (_, args) => {
+    loginUser: async (_, args, ctx) => {
+
       const result = await axios.post(
         `http://${process.env.NAME}:${process.env.PORT_AUTH2MS}/api/login`,
         args
@@ -64,7 +67,9 @@ export const auth2ms_mutations = {
   };
 
 export const auth2ms_querys = {
-  getUserEmailById: async (_, args) => {
+  getUserEmailById: async (_, args, ctx) => {
+    if (!ctx || !ctx.user) throw unAuthError;
+
     const result = await axios.get(
       `http://${process.env.NAME}:${process.env.PORT_AUTH2MS}/api/iduser/${args.id}`
     );

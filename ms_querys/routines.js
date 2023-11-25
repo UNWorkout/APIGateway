@@ -1,5 +1,6 @@
 import axios from "axios";
 import "dotenv/config";
+import {unAuthError} from "../utils/index.js";
 
 export const routines_func_querys = `
   routineUserDay(ID: ID!, DAY: String!): Exerciseday
@@ -48,13 +49,17 @@ export const routines_squemas = `
 `;
 
 export const routines_querys = {
-  routineUserDay: async (_, { ID, DAY }) => {
+  routineUserDay: async (_, { ID, DAY }, ctx) => {
+    if (!ctx || !ctx.user) throw unAuthError;
+
     const result = await axios.get(
       `http://${process.env.NAME}:${process.env.PORT_ROUTINES}/api/User/${ID}/${DAY}`
     );
     return result.data;
   },
-  routineUser: async (_, { ID }) => {
+  routineUser: async (_, { ID }, ctx) => {
+    if (!ctx || !ctx.user) throw unAuthError;
+
     console.log(ID)
     let result
     try{
@@ -70,7 +75,9 @@ export const routines_querys = {
 };
 
 export const routines_mutations = {
-  addRoutine: async (_, args) => {
+  addRoutine: async (_, args, ctx) => {
+    if (!ctx || !ctx.user) throw unAuthError;
+
     console.log(JSON.stringify(args))
     let result
     try{
@@ -82,14 +89,18 @@ export const routines_mutations = {
     console.log(result)
     return result.data;
   },
-  updateRoutine: async(_, args) => {
+  updateRoutine: async(_, args, ctx) => {
+    if (!ctx || !ctx.user) throw unAuthError;
+
     const result = await axios.patch(
       `http://${process.env.NAME}:${process.env.PORT_ROUTINES}/api/User/${args.ID}/${args.DAY}`,
       args
     );
     return result.data;
   },
-  deleteRoutine: async(_, { ID }) => {
+  deleteRoutine: async(_, { ID }, ctx) => {
+    if (!ctx || !ctx.user) throw unAuthError;
+
     const result = await axios.delete(
       `http://${process.env.NAME}:${process.env.PORT_ROUTINES}/api/User/${ID}`
     );

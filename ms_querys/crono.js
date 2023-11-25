@@ -1,5 +1,6 @@
 import axios from "axios";
 import "dotenv/config";
+import {unAuthError} from "../utils/index.js";
 
 // Definiciones de tipos y mutaciones de GraphQL actualizadas
 export const crono_func_mutations = `
@@ -14,7 +15,8 @@ export const crono_schemas = `
 
 // Implementación de resolvers utilizando axios y manejo de errores
 export const crono_mutations = {
-  notificarUsuario: async (_, { id }) => {
+  notificarUsuario: async (_, { id }, ctx) => {
+
     try {
       const result = await axios.post(
         `http://${process.env.NAME}:${process.env.PORT_CRONO}/api/notificaciones/notificar/${id}`
