@@ -2,29 +2,54 @@ import axios from "axios";
 import "dotenv/config";
 import {unAuthError} from "../utils/index.js";
 
-// Definiciones de tipos y mutaciones de GraphQL actualizadas
 export const crono_func_mutations = `
-  notificarUsuario(id: ID!): CronoResponse
+  notificarRutina(
+    email: String!
+    dias_semana: [ExercisedayInput]
+  ): NotificationResponse
+
+  sendMail(
+    destinatario: String!
+    asunto: String!
+    mensaje: String!
+  ): NotificationResponse
 `;
 
 export const crono_schemas = `
-  type CronoResponse {
-    message: String
+  type NotificationResponse {
+    msg: String
+  }
+
+  input ExercisedayInput {
+    dia: String
+    ejercicios: [Int]
+    Duracion_Max: Int
+    Hora_inicio: String
   }
 `;
 
-// Implementación de resolvers utilizando axios y manejo de errores
 export const crono_mutations = {
-  notificarUsuario: async (_, { id }, ctx) => {
-
-    try {
-      const result = await axios.post(
-        `http://${process.env.NAME}:${process.env.PORT_CRONO}/api/notificaciones/notificar/${id}`
+  notificarRutina: async (_, args, ctx) => {
+    if (!ctx || !ctx.user) throw unAuthError;
+    try{
+      result = await axios.post(
+        `http://${process.env.NAME}:${process.env.PORT_CRONO}/api/cronjob`,
+        args
       );
-      return { message: result.data.message };
-    } catch (error) {
-      console.error(error);
-      return { message: "Error al notificar al usuario" };
-    }
+    }catch(e){console.error(e)}
+    console.log(result)
+    return result.data;
+  },
+  sendMail: async (_, args, ctx) => {
+    if (!ctx || !ctx.user) throw unAuthError;
+    try{
+      result = await axios.post(
+        `http://${process.env.NAME}:${process.env.PORT_CRONO}/api/enviar`,
+        args
+      );
+    }catch(e){console.error(e)}
+    console.log(result)
+    return result.data;
   },
 };
+
