@@ -1,6 +1,5 @@
 import axios from "axios";
 import "dotenv/config";
-import {unAuthError} from "../utils/index.js";
 
 export const crono_func_mutations = `
   notificarRutina(
@@ -30,26 +29,32 @@ export const crono_schemas = `
 
 export const crono_mutations = {
   notificarRutina: async (_, args, ctx) => {
-    if (!ctx || !ctx.user) throw unAuthError;
+    let result
     try{
       result = await axios.post(
         `http://${process.env.NAME}:${process.env.PORT_CRONO}/api/cronjob`,
         args
       );
     }catch(e){console.error(e)}
+    if (!result || !result.data) {
+      throw new Error('No se recibió respuesta del servicio de correo');
+    }
     console.log(result)
+
     return result.data;
   },
   sendMail: async (_, args, ctx) => {
-    if (!ctx || !ctx.user) throw unAuthError;
+    let result
     try{
       result = await axios.post(
         `http://${process.env.NAME}:${process.env.PORT_CRONO}/api/enviar`,
         args
       );
     }catch(e){console.error(e)}
+    if (!result || !result.data) {
+      throw new Error('No se recibió respuesta del servicio de correo');
+    }
     console.log(result)
     return result.data;
   },
 };
-
